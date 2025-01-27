@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EasyPayController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -10,11 +11,13 @@ Route::get('/', function () {
 
 // Customers
 Route::get("/customer", [CustomerController::class, 'view'])->name('customer.view');
-Route::post('/customer/register', [CustomerController::class, 'store'])->name('customer.store');
+Route::post('/customer/register', [CustomerController::class, 'register'])->name('customer.register');
 Route::get('/customer/success', [CustomerController::class, 'success'])->name('customer.success');
-// Route::get('/customer/success', function () {
-//     return view('customer.success'); // Blade file for the success page
-// })->name('customer.success');
+
+// EasyPay
+Route::get("/easypay", [EasyPayController::class, 'view'])->name('easypay.view');
+Route::post("/easypay/generate", [EasyPayController::class, 'generate'])->name('easypay.generate');
+Route::get('/easypay/success', [EasyPayController::class, 'success'])->name('easypay.success');
 
 
 Route::get('/dashboard', function () {
