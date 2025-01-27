@@ -20,11 +20,28 @@ class CustomerController extends Controller
      */
     public function success(Request $request): View
     {
-        //  dd($request->all());
+        //  dd($session->all());
         // dump(session()->all());
 
+        // Retrieve values from session or query parameters
+        $easyPayNumber = $request->query('easyPayNumber', session('easyPayNumber'));
+        $receiverId = $request->query('receiverId', session('receiverId'));
+        $customerId = $request->query('customerId', session('customerId'));
+        $charLength= $request->query('charLength', session('charLength'));
+        $checksum = $request->query('checksum', session('checksum'));
+
+        // Ensure all values exist
+        // if (!$easyPayNumber || !$receiverId || !$customerId || !$checksum) {
+        //     abort(400, 'Invalid or missing EasyPay data.');
+        // }
+
+        // Pass values to the view
         return view('customer.success', [
-            'easyPayNumber' => session('easyPayNumber')
+            'easyPayNumber' => $easyPayNumber,
+            'receiverId' => $receiverId,
+            'customerId' => $customerId,
+            'charLength' => $charLength,
+            'checksum' => $checksum,
         ]);
     }
 
@@ -39,15 +56,24 @@ class CustomerController extends Controller
         // Validate the request input
         $validated = $request->validate([
             'customerId' => 'required|numeric|min:1',
+            'charLength' => 'required|numeric|min:1',
         ]);
 
         // Simulate EasyPay number generation (replace with actual logic)
         $customerId = $validated['customerId'];
+        $charLength = $validated['charLength'];
         $receiverId = '4545'; // Example fixed Receiver ID
-        $easyPayNumber = $this->generateEasyPayNumber($receiverId, $customerId);
+        $easyPayNumber = $this->generateEasyPayNumber($receiverId, $customerId, $charLength);
 
         // Redirect to the success page with the EasyPay number
-        return redirect()->route('customer.success')->with('easyPayNumber', $easyPayNumber);
+        // return redirect()->route('customer.success')->with('easyPayNumber', $easyPayNumber);
+        return redirect()->route('customer.success')->with([
+            'easyPayNumber' => $easyPayNumber,
+            'receiverId' => $receiverId,
+            'customerId' => $customerId,
+            'charLength' => $charLength,
+            'checksum' => substr($easyPayNumber, -1),
+        ]);
     }
 
     /**
@@ -57,11 +83,12 @@ class CustomerController extends Controller
      * @param  string  $customerId
      * @return string
      */
-    private function generateEasyPayNumber(string $receiverId, string $customerId): string
+    private function generateEasyPayNumber(string $receiverId, string $customerId, int $length) : string
     {
-        $paddedCustomerId = str_pad($customerId, 2, '0', STR_PAD_LEFT);
+        $paddedCustomerId = str_pad($customerId, $length, '0', STR_PAD_RIGHT);
         $baseNumber = $receiverId . $paddedCustomerId;
         $checkDigit = $this->calculateLuhnCheckDigit($baseNumber);
+
         return '9' . $baseNumber . $checkDigit;
     }
 
