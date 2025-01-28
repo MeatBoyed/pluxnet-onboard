@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="flex justify-center items-center flex-col w-full h-full gap-10">
-        <h1 class="text-4xl text-center font-bold">Welcome to PluxNet</h2>
+        <p class="text-5xl text-center font-extrabold">Welcome to PluxNet</p>
         <form action="{{ route('customer.register') }}" class="flex flex-col items-start justify-center w-full gap-4" method="POST">
             @csrf
             <div class="w-full flex-col sm:flex-row flex gap-4">
@@ -65,7 +65,12 @@
             </div>
 
             <div class="w-full">
-                <button type="submit" class="bg-[#007BFF] text-white border-none px-3 py-4 hover:cursor-pointer hover:bg-[#0056b3] w-full rounded-md text-lg w-full">Generate EasyPay Number</button>
+
+            <x-primary-button class="w-full text-center justify-center items-center h-10">
+                {{ __('Confirm') }}
+            </x-primary-button>
+
+
             </div>
         </form>
     </div>
