@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+// Route::get("/", [CustomerController::class, 'view'])->name('welcome');
 
 // Customers
 Route::get("/customer", [CustomerController::class, 'view'])->name('customer.view');

@@ -8,14 +8,17 @@ use Illuminate\View\View;
 use App\Models\Customer;
 use App\Models\EasyPay;
 use App\Services\EasyPayService;
+use App\Services\CustomerService;
 
 class CustomerController extends Controller
 {
-      protected $easyPayService;
+    protected $easyPayService;
+    protected $customerService;
 
-    public function __construct(EasyPayService $easyPayService)
+    public function __construct(EasyPayService $easyPayService, CustomerService $customerService)
     {
         $this->easyPayService = $easyPayService;
+        $this->customerService = $customerService;
     }
 
      /**
@@ -63,9 +66,9 @@ class CustomerController extends Controller
      * Register a new customer & Save Customer (modl) to db.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Contracts\View\Factory | \Illuminate\Contracts\View\View
      */
-    public function register(Request $request)
+    public function register(Request $request): \Illuminate\Contracts\View\Factory | \Illuminate\Contracts\View\View
     {
         // Step 1 - Validate the request inputs
         $validated = $request->validate([
@@ -75,53 +78,33 @@ class CustomerController extends Controller
             'phone' => 'required|string|max:20|regex:/^\+?[0-9\s\-]+$/', // Basic validation for phone number format
             'street' => 'required|string|max:255',
             'city' => 'required|string|max:255',
-            'zipCode' => 'required|numeric|digits_between:4,10', // ZIP code with 4-10 digits
-            'customerId' => 'required|numeric|min:1',
-            'charLength' => 'required|numeric|min:1',
+            'zip_code' => 'required|numeric|digits_between:4,10', // ZIP code with 4-10 digits
+            'agreed_terms' => 'required|numeric|min:1',
+            'customerId' => 'required|string|max:255',
         ]);
 
 
         // Extract key values -> make a model?
         $customerId = $validated['customerId'];
 
-        // Step 2 - Call API Request (method) to Register Customer on Splynx - Handle ERRORS
-        // $response = $this->RegisterSplynxCustomer($customerId);
+        $customer = $this->customerService->register($customerId, $validated);
+        $easypay = $this->easyPayService->save($customer);
+        // Customer::where('splynx_id', $customer->splynx_id)->update(['easypay_id' => $easypay->id]);
 
-        // Move to SplynxApiService
-        // Save Return Data to DB (Customer Model) - Handle ERRORS (Generate EasyPay Number if not ind db layer)
-        $customer = Customer::create([
-            'name' => $validated['name'],
-            'surname' => $validated['surname'],
-            'email' => $validated['email'], // Ensure email is unique in the users table
-            'phone_number' => $validated['phone'], // Basic validation for phone number format
-            'street' => $validated['phone'],
-            'city' => $validated['phone'],
-            'zip_code' => $validated['zipCode'], // ZIP code with 4-10 digits
-            'agreed-terms' => 'as', // Splynx Customer ID
-            'tarrif' => 'as', // Splynx Customer ID
-            'splynx_id' => $customerId, // Splynx Customer ID
-        ]);
-
-        // dd($customer->splynx_id);
-        // 3 - Generate & Save EasyPay Number
-        $receiverId = config('easypay.recieverId');
-        $character_limit = config('easypay.character_limit');
-        // $easyPayNumber = $this->easypayService->($receiverId, $customerId, $character_limit);
-        $easyPayNumber = $this->easyPayService->generate($customerId);
-
-        // Move to EasyPayService
-        // Create EasyPay Record
-        $easypay = EasyPay::create([
-            'customerId' => $customer->splynx_id,
-            'splynx_id' => $customer->splynx_id,
-            'easypay_number' => $easyPayNumber,
-            'reciever_id' => $receiverId,
-            'charachter_length' => $character_limit,
-            'check_digit' => substr($easyPayNumber, -1),
-        ]);
+        dd($customer);
+        dd($easypay);
 
         // Step 3 - Redirect to Success page with Data
-        return redirect()->route('customer.success')->with([
+        // return redirect()->route('customer.success')->with([
+        //     'easypay_number' => $easypay->easypay_number,
+        //     'receiverId' => $easypay->reciever_id,
+        //     'customerId' => $customer->splynx_id,
+        //     'charLength' => $easypay->character_limit,
+        //     'checksum' => $easypay->check_digit,
+        //     'username' => $customer->username,
+        //     'password' => $customer->password,
+        // ]);
+        return view('customer.success', [
             'easypay_number' => $easypay->easypay_number,
             'receiverId' => $easypay->reciever_id,
             'customerId' => $customer->splynx_id,
@@ -131,8 +114,4 @@ class CustomerController extends Controller
             'password' => $customer->password,
         ]);
     }
-
-   
-
-   
 }

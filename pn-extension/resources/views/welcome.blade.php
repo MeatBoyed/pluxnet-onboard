@@ -19,7 +19,109 @@
             </style>
         @endif
     </head>
-    <body class="font-sans antialiased dark:bg-black dark:text-white/50">
+<body class="bg-pluxnet-pink min-h-screen flex flex-col justify-center items-center w-full">
+    <div class="flex justify-center items-center flex-col mxax-w-lg px-2 py-8 gap-8">
+        
+            <p class=" text-center text-sm text-gray-600">Already have an account? <a href="#" class="text-pluxnet-pink hover:underline">Sign in</a></p>
+       
+
+        <p class="text-center text-white text-sm ">Get Connected. Stay Connected! No Contracts Required.</p>
+    </div>
+</body>
+<!-- <body class="bg-[#2F3163] min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-center mb-8">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%7B1FBE03EA-24D4-44E8-8F09-B454522EBDC3%7D-zXnnrPKdYwk88hAcoIwN1R00RiCbGT.png" alt="PluxNet Logo" class="h-12">
+        </div>
+
+        <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <h1 class="text-2xl md:text-3xl font-bold text-[#2F3163] text-center mb-6">Welcome to PluxNet</h1>
+            <p class="text-gray-600 text-center mb-8">Register now to manage your fibre connection</p>
+
+            <form action="{{ route('customer.register') }}" method="POST" class="space-y-6">
+                @csrf
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <x-input-label for="name" :value="__('Name')" />
+                        <x-text-input id="name" class="w-full px-4 py-2 border rounded-md focus:ring-[#E0457B] focus:border-[#E0457B]" name="name" :value="old('name')" required autocomplete="name" />
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-input-label for="surname" :value="__('Surname')" />
+                        <x-text-input id="surname" class="w-full px-4 py-2 border rounded-md focus:ring-[#E0457B] focus:border-[#E0457B]" name="surname" :value="old('surname')" required autocomplete="surname" />
+                        <x-input-error :messages="$errors->get('surname')" class="mt-2" />
+                    </div>
+                </div>
+
+                <div>
+                    <x-input-label for="email" :value="__('Email')" />
+                    <x-text-input id="email" type="email" class="w-full px-4 py-2 border rounded-md focus:ring-[#E0457B] focus:border-[#E0457B]" name="email" :value="old('email')" required autocomplete="username" />
+                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                </div>
+
+                <div>
+                    <x-input-label for="phone" :value="__('Phone Number')" />
+                    <x-text-input id="phone" class="w-full px-4 py-2 border rounded-md focus:ring-[#E0457B] focus:border-[#E0457B]" name="phone" :value="old('phone')" required autocomplete="phone" />
+                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+                </div>
+
+                <div>
+                    <x-input-label for="street" :value="__('Street')" />
+                    <x-text-input id="street" class="w-full px-4 py-2 border rounded-md focus:ring-[#E0457B] focus:border-[#E0457B]" name="street" :value="old('street')" required autocomplete="street" />
+                    <x-input-error :messages="$errors->get('street')" class="mt-2" />
+                </div>
+
+                <div>
+                    <x-input-label for="city" :value="__('City')" />
+                    <x-text-input id="city" class="w-full px-4 py-2 border rounded-md focus:ring-[#E0457B] focus:border-[#E0457B]" name="city" :value="old('city')" required autocomplete="city" />
+                    <x-input-error :messages="$errors->get('city')" class="mt-2" />
+                </div>
+
+                <div>
+                    <x-input-label for="zipCode" :value="__('ZIP Code')" />
+                    <x-text-input id="zipCode" class="w-full px-4 py-2 border rounded-md focus:ring-[#E0457B] focus:border-[#E0457B]" name="zipCode" :value="old('zipCode')" required autocomplete="zipCode" />
+                    <x-input-error :messages="$errors->get('zipCode')" class="mt-2" />
+                </div>
+
+                <div>
+                    <x-input-label for="customerId" :value="__('Customer Id')" />
+                    <x-text-input id="customerId" class="w-full px-4 py-2 border rounded-md focus:ring-[#E0457B] focus:border-[#E0457B]" name="customerId" :value="old('customerId')" required autocomplete="customerId" />
+                    <x-input-error :messages="$errors->get('customerId')" class="mt-2" />
+                </div>
+
+                <div>
+                    <x-input-label for="charLength" :value="__('Character Length')" />
+                    <x-text-input id="charLength" class="w-full px-4 py-2 border rounded-md focus:ring-[#E0457B] focus:border-[#E0457B]" name="charLength" :value="old('charLength')" required autocomplete="charLength" />
+                    <x-input-error :messages="$errors->get('charLength')" class="mt-2" />
+                </div>
+
+                <div class="flex items-start space-x-3">
+                    <div class="flex items-center h-5">
+                        <input type="checkbox" id="terms" name="terms" required class="h-4 w-4 rounded border-gray-300 text-[#E0457B] focus:ring-[#E0457B] cursor-pointer">
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="terms" class="text-sm text-gray-700 cursor-pointer">I accept the Terms and Conditions and Privacy Policy</label>
+                        <span class="text-xs text-gray-500 mt-1">
+                            By checking this box, you agree to PluxNet's 
+                            <a href="#" class="text-[#E0457B] hover:underline">Terms of Service</a> and 
+                            <a href="#" class="text-[#E0457B] hover:underline">Privacy Policy</a>
+                        </span>
+                    </div>
+                </div>
+
+                <x-primary-button class="w-full text-white py-3 px-6 rounded-md bg-[#E0457B] hover:bg-opacity-90 transition-colors duration-200">
+                    {{ __('Register Now') }}
+                </x-primary-button>
+            </form>
+
+            <p class="mt-6 text-center text-sm text-gray-600">Already have an account? <a href="#" class="text-[#E0457B] hover:underline">Sign in</a></p>
+        </div>
+
+        <p class="text-center text-white text-sm mt-8">Get Connected. Stay Connected! No Contracts Required.</p>
+    </div>
+</body> -->
+
+    <!-- <body class="font-sans antialiased dark:bg-black dark:text-white/50">
         <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
             <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="https://laravel.com/assets/img/welcome/background.svg" alt="Laravel background" />
             <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
@@ -172,5 +274,5 @@
                 </div>
             </div>
         </div>
-    </body>
+    </body> -->
 </html>

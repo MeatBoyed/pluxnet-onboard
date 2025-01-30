@@ -1,17 +1,6 @@
-<x-guest-layout>
-<div class="bg-pluxnet-pink min-h-screen flex flex-col justify-center items-center w-full">
-    <div class="flex justify-center items-center flex-col mxax-w-lg px-2 py-8 gap-8">
-        <div class="flex justify-center ">
-           <img src="{{ asset('images/full_logo.png') }}" alt="logo" class="w-56 h-20 fill-current text-gray-500">
-        </div>
+<?php // resources/views/components/register-form.blade.php ?>
 
-        <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-4 flex justify-center items-center flex-col gap-3 md:p-8">
-            <h1 class="text-2xl md:text-3xl font-bold text-pluxnet-navy text-center ">Welcome to PluxNet</h1>
-            <p class="text-gray-600 text-md text-center">Register now to manage your fibre connection</p>
-
-            <!-- <x-register-form /> -->
-
-<form action="{{ route('customer.register') }}"  method="POST" class="space-y-6">
+<form action="{{ route('customer.register') }}" method="POST" class="space-y-6">
     @csrf
         <div>
             <x-input-label for="customerId" :value="__('Customer Id')" />
@@ -74,12 +63,3 @@
 
     <x-primary-button class="w-full text-center justify-center bg-pluxnet-navy items-center h-10">{{ __('Register Now') }}</x-primary-button>
 </form>
-
-
-            <p class=" text-center text-ssm text-gray-600">Already have an account? <a href="#" class="text-pluxnet-pink hover:underline">Sign in</a></p>
-        </div>
-
-        <p class="text-center text-white text-sm ">Get Connected. Stay Connected! No Contracts Required.</p>
-    </div>
-</div>
-</x-guest-layout>
