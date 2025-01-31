@@ -1,0 +1,42 @@
+
+<?php
+
+use App\Livewire\Actions\Logout;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Volt\Component;
+
+new class extends Component
+{
+    public string $password = '';
+
+}; ?>
+
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 w-full">
+    <div class="max-w-md w-full bg-white rounded-lg shadow-lg overflow-hidden">
+        <!-- Header -->
+        <div class="bg-pluxnet-pink p-4 flex flex-col justify-center items-center">
+            <!-- <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%7B1FBE03EA-24D4-44E8-8F09-B454522EBDC3%7D-zXnnrPKdYwk88hAcoIwN1R00RiCbGT.png" alt="PluxNet Logo" class="h-8"> -->
+            <h2 class="text-white text-xl font-bold">EasyPay</h2>
+            <p class="text-white text-xs ">Use this for all Payment Refrences</p>
+        </div>
+
+        <!-- Customer Details -->
+        <div class="p-6 space-y-4">
+            <div>
+                <p class="text-gray-600">EasyPay Number</p>
+                <p class="text-lg font-semibold text-pluxnet-navy">9 4123 8123 81</p>
+            <p class="text-sm text-gray-600">Always use your EasyPay number as Payment Refrence</p>
+            </div>
+            <p class="text-gray-600">Your EasyPay number can be used at all local stores, Shoprites
+                taxi ranks.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-gray-100 p-4 flex justify-between items-center">
+            <button class="bg-pluxnet-coral text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors duration-200">
+                Copy EasyPay Number
+            </button>
+        </div>
+    </div>
+</div>

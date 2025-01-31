@@ -14,6 +14,13 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                pluxnet: {
+                    navy: '#2F3163',
+                    pink: '#E0457B',
+                    coral: '#FF7F66',
+                }
+            }
         },
     },
 
