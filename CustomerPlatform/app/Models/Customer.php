@@ -24,7 +24,7 @@ class Customer extends Model
         'tarrif', // Splynx Customer ID
         'splynx_id', // Splynx Customer ID
     ];  
-    
+
     public function easypay(): HasMany
     {
         return $this->hasMany(EasyPay::class);
