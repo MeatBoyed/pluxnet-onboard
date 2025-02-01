@@ -16,16 +16,16 @@
     </head>
     <!-- <body class="font-sans text-gray-900 antialiased"> -->
 <body class="bg-gradient-to-br from-pluxnet-navy to-pluxnet-pink min-h-screen  antialiased font-sans">
-        <div class="min-h-screen flex flex-col gap-4 sm:justify-center items-center sm:pt-0 md:pb-6">
-            <div class="pt-6">
-                <a href="/" wire:navigate>
-                    <x-application-logo />
-                </a>
-            </div>
-
-            <div class="w-full sm:max-w-lg mt-6 px-4 md:px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
-            </div>
+    <div class="min-h-screen flex flex-col gap-4 sm:justify-center items-center sm:pt-0 md:pb-6">
+        <div class="pt-6">
+            <a href="/" wire:navigate>
+                <x-application-logo />
+            </a>
         </div>
-    </body>
+
+        <div class="w-full sm:max-w-lg mt-6 px-4 md:px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            {{ $slot }}
+        </div>
+    </div>
+</body>
 </html>
