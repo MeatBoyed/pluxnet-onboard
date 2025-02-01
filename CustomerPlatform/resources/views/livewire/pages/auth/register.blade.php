@@ -101,47 +101,14 @@ new #[Layout('layouts.guest')] class extends Component
         $this->redirect(route('dashboard', absolute: false), navigate: true);
     }
 };
-
-
-// <?php
-// use App\Models\User;
-// use Illuminate\Auth\Events\Registered;
-// use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\Hash;
-// use Illuminate\Validation\Rules;
-// use Livewire\Attributes\Layout;
-// use Livewire\Volt\Component;
-
-// new #[Layout('layouts.guest')] class extends Component
-// {
-//     public string $name = '';
-//     public string $email = '';
-//     public string $password = '';
-//     public string $password_confirmation = '';
-
-//     // /**
-//     //  * Handle an incoming registration request.
-//     //  */
-//     public function register(): void
-//     {
-//         $validated = $this->validate([
-//             'name' => ['required', 'string', 'max:255'],
-//             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-//             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
-//         ]);
-
-//         $validated['password'] = Hash::make($validated['password']);
-
-//         event(new Registered($user = User::create($validated)));
-
-//         Auth::login($user);
-
-//         $this->redirect(route('dashboard', absolute: false), navigate: true);
-//     }
-// }; 
 ?>
 
-<div>
+<div class="flex flex-col justify-center items-center gap-5">
+    <div class="flex flex-col justify-center items-center">
+        <h1 class="text-3xl w-full  font-bold text-pluxnet-navy text-center ">Welcome to PluxNet</h1>
+        <p class="text-gray-600 text-sm text-center">Register now to manage your fibre connection</p>
+    </div>
+
     <form wire:submit="register" class="space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md">
             <!-- First (old Name) -->
