@@ -2,12 +2,27 @@
 <?php
 
 use App\Livewire\Actions\Logout;
+use App\Models\EasyPay;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Volt\Component;
 
 new class extends Component
 {
-    public string $password = '';
+    public string $easypay_number = '';
+    
+    /**
+     * Mount the component.
+     */
+    public function mount(): void
+    {
+        $user = Auth::user();
+        $customer = Customer::where('email', $user->email)->first();
+        $easyPay = EasyPay::where('splynx_id', $customer->splynx_id)->first();
+
+        $this->easypay_number = $easyPay->easypay_number;
+        // dump($user->id);
+    }
 
 }; ?>
 
@@ -24,7 +39,9 @@ new class extends Component
         <div class="p-6 space-y-4">
             <div>
                 <p class="text-gray-600">EasyPay Number</p>
-                <p class="text-lg font-semibold text-pluxnet-navy">9 4123 8123 81</p>
+                <p class="text-lg font-semibold text-pluxnet-navy">
+                    {{ implode(' ', str_split($easypay_number, 4)) }} (Group of 4)
+                </p>
             <p class="text-sm text-gray-600">Always use your EasyPay number as Payment Refrence</p>
             </div>
             <p class="text-gray-600">Your EasyPay number can be used at all local stores, Shoprites
