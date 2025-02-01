@@ -13,6 +13,19 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+
+         <!-- Scripts -->
+        <script>
+            function copyToClipboard(name, text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert(`${name} coppied to clipboard`);
+                }).catch(err => {
+                    alert(`Failed to copy ${name}` + err);
+                });
+            }
+        </script>
+        
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">

@@ -14,15 +14,18 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
 <body class="bg-gradient-to-br from-pluxnet-navy to-pluxnet-pink min-h-screen text-white antialiased font-sans">
-    <header class="container mx-auto px-4 py-6 flex justify-between items-center">
+    <nav class="flex w-full px-4 md:px-10 py-6 justify-center md:justify-between items-center">
         <!-- <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%7B1FBE03EA-24D4-44E8-8F09-B454522EBDC3%7D-zXnnrPKdYwk88hAcoIwN1R00RiCbGT.png" alt="PluxNet Logo" class="h-12"> -->
-         <x-application-logo class="h-12" />
-        <nav>
-            <a href="#" class="text-white hover:text-pluxnet-coral transition-colors duration-200">Login</a>
-        </nav>
-    </header>
+         <x-application-logo  />
+        <a href="/register" class="hidden bg-pluxnet-navy text-white text-lg px-6 py-1 rounded-md md:inline-block hover:bg-opacity-90 transition-colors duration-200 ">
+            Register
+        </a>
+        <!-- <x-nav-link class="" :href="route('register')" wire:navigate>
+            {{ __('Register') }}
+        </x-nav-link> -->
+    </nav>
 
-    <main class="container mx-auto px-4 py-12">
+    <main class="flex flex-col justify-center items-center mx-auto px-4 py-6">
         <div class="max-w-3xl mx-auto text-center">
             <h1 class="text-4xl md:text-6xl font-bold mb-6">
                 Connect at the Speed of Light
@@ -35,7 +38,7 @@
             </a>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-8 mb-12">
+        <div class="grid md:grid-cols-3 gap-4 mb-12 max-w-5xl">
             <div class="bg-white bg-opacity-10 p-6 rounded-lg">
                 <h2 class="text-2xl font-semibold mb-4">Lightning-Fast Speeds</h2>
                 <p>Experience internet speeds that keep up with your digital lifestyle. Stream, game, and work without interruption.</p>
@@ -65,11 +68,16 @@
             <a href="/register" class="bg-white text-pluxnet-navy text-lg px-8 py-3 rounded-full inline-block hover:bg-pluxnet-coral hover:text-white transition-colors duration-200">
                 Sign Up Today
             </a>
+            <!-- <p class="bg-white text-pluxnet-navy text-lg px-8 py-3 rounded-full inline-block hover:bg-pluxnet-coral hover:text-white transition-colors duration-200">
+                <x-nav-link     class="" :href="route('register')" wire:navigate>
+                    {{ __('Sign Up Today') }}
+                </x-nav-link>
+            </p> -->
         </div>
     </main>
 
-    <footer class="bg-pluxnet-navy bg-opacity-50 mt-12 py-6">
-        <div class="flex gap-4 justify-center items-center px-4 text-center">
+    <footer class="bg-pluxnet-navy bg-opacity-50 mt-12 py-3">
+        <div class="flex flex-col md:flex-row gap-4 justify-center items-center px-4 text-center ">
             <p>&copy; {{ date("Y") }} PluxNet. All rights reserved.</p>
             <p class="">
                 <a href="#" class="hover:underline">Terms of Service</a> | 
