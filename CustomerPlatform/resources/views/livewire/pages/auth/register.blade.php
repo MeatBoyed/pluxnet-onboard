@@ -2,6 +2,8 @@
 
 use App\Models\User;
 use App\Models\Customer;
+use App\Models\EasyPay;
+use App\Services\EasyPayService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -67,7 +69,7 @@ new #[Layout('layouts.guest')] class extends Component
             ]);
 
             // Create the corresponding customer record
-            Customer::create([
+            $customer = Customer::create([
                 'id' => $user->id, // Assuming the `customers` table has a `user_id` foreign key
                 'splynx_id' => '1234', // Default value
                 'username' => $validated['email'], // Assuming username is the email
@@ -82,6 +84,12 @@ new #[Layout('layouts.guest')] class extends Component
                 'tarrif' => $validated['tarrif'],
                 'agreed_terms' => $validated['agreed_terms'],
             ]);
+
+            // Create the corresponding EasyPay record 
+            $easyPayService = new EasyPayService();
+            $easyPayService->save($customer);
+            dump($easyPayService);
+
 
             // Fire the Registered event
             event(new Registered($user));
