@@ -1,13 +1,10 @@
 <x-app-layout>
-    <!-- <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot> -->
-    <livewire:dashboard.greeting-card />
+    <div class="flex justify-center items-center w-full flex-col max-w-5xl gap-8 py-6 px-3">
+        <livewire:dashboard.greeting-card />
 
-    <div class="py-12 w-full grid grid-cols-1 md:grid-cols-2">
-        <livewire:dashboard.customer-details-card /> 
-        <livewire:dashboard.easypay-details-card /> 
+        <div class="w-full gap-5 grid grid-cols-1 md:grid-cols-2">
+            <livewire:dashboard.customer-details-card /> 
+            <livewire:dashboard.easypay-details-card /> 
+        </div>
     </div>
 </x-app-layout>

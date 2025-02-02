@@ -81,9 +81,9 @@ new class extends Component
 
         <!-- Footer -->
         <div class="bg-gray-100 p-4 flex justify-between items-center">
-            <p class="text-sm text-gray-600">Joined: <span class="font-semibold">{{ $created_at }}</span></p>
+            <p class="hidden text-sm text-gray-600">Joined: <span class="font-semibold">{{ $created_at }}</span></p>
             <!-- Green more Clickly colour -->
-            <button class="bg-pluxnet-coral text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors duration-200">
+            <button class="w-full bg-pluxnet-coral text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors duration-200">
                 Login to Portal
             </button>
         </div>

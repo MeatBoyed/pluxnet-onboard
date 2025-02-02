@@ -33,9 +33,7 @@ new class extends Component
 
 <div class="max-w-md w-full bg-white rounded-lg shadow-lg overflow-hidden">
     <!-- Greeting Content -->
-    <div class="bg-gradient-to-r from-pluxnet-pink to-pluxnet-coral p-8 text-center">
-        <!-- <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%7B1FBE03EA-24D4-44E8-8F09-B454522EBDC3%7D-zXnnrPKdYwk88hAcoIwN1R00RiCbGT.png" alt="PluxNet Logo" class="h-12 mx-auto mb-6"> -->
-         <x-application-logo />
+    <div class="bg-gradient-to-r from-pluxnet-pink to-pluxnet-coral p-3 text-center">
         <h2 class="text-white text-3xl font-bold mb-4">Welcome to PluxNet!</h2>
         <p class="text-white text-opacity-90 text-lg">
             We're thrilled to have you on board. Get ready to experience internet at the speed of light!
