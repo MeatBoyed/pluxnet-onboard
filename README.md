@@ -1,14 +1,14 @@
 # pluxnet-onboard
 
 ### Implement PluxNet branding - Dashboard & Register
-- Use new PluxNet logo
-- Change background to PN theme
-- Add Welcoming Card to Dashboard (Only Dash)
-- Create Welcoming page (Force to register)
-- Make Pages Responsive
+- DONE - Use new PluxNet logo
+- DONE - Change background to PN theme
+- DONE - Add Welcoming Card to Dashboard (Only Dash)
+- DONE - Create Welcoming page (Force to register)
+- DONE - Make Pages Responsive
 
 ## Functional
-- Add JS to Copy EasyPay Number
+- DONE - Add JS to Copy EasyPay Number
 - Add Select dropdown to Tarrifs
 - Add Error Handling!
 

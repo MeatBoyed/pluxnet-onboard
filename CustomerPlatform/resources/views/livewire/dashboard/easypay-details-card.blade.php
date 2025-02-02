@@ -51,7 +51,7 @@ new class extends Component
 
         <!-- Footer -->
         <div class="bg-gray-100 p-4 flex justify-between items-center">
-            <button class="bg-pluxnet-coral text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors duration-200">
+            <button onclick="copyToClipboard('EasyPay Number', '{{ $easypay_number}}')" class="bg-pluxnet-coral text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors duration-200">
                 Copy EasyPay Number
             </button>
         </div>
