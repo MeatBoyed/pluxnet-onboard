@@ -29,8 +29,8 @@ new class extends Component
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex ">
+                    <x-nav-link :href="route('dashboard')" class="text-white" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Home') }}
                     </x-nav-link>
                 </div>
@@ -89,7 +89,7 @@ new class extends Component
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-slate-50" x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
+                <div class="text-white" x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
                 <div class="font-medium text-sm text-slate-400">{{ auth()->user()->email }}</div>
             </div>
 
