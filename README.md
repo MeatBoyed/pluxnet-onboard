@@ -20,6 +20,9 @@
 # Deployment
 
 ### Query
+
+Deploying Laravel - https://stackoverflow.com/questions/59663762/laravel-what-steps-should-one-take-to-make-a-laravel-app-ready-for-production
+
 - Connect to Splynx in Localhost dev
 - Port configurations/networking for Docker
 
