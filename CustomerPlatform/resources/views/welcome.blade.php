@@ -16,7 +16,9 @@
 <body class="bg-gradient-to-br from-pluxnet-navy to-pluxnet-pink min-h-screen text-white antialiased font-sans">
     <nav class="flex w-full px-4 md:px-10 py-6 justify-center md:justify-between items-center">
         <!-- <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%7B1FBE03EA-24D4-44E8-8F09-B454522EBDC3%7D-zXnnrPKdYwk88hAcoIwN1R00RiCbGT.png" alt="PluxNet Logo" class="h-12"> -->
-         <x-application-logo  />
+         <a href="https://pluxnet.co.za">
+            <x-application-logo  />
+         </a>
         <a href="/register" class="hidden bg-pluxnet-navy text-white text-lg px-6 py-1 rounded-md md:inline-block hover:bg-opacity-90 transition-colors duration-200 ">
             Register
         </a>
@@ -26,9 +28,10 @@
     </nav>
 
     <main class="flex flex-col justify-center items-center mx-auto px-4 py-6">
-        <div class="max-w-3xl mx-auto text-center">
+        <div class="max-w-5xl mx-auto text-center">
             <h1 class="text-4xl md:text-6xl font-bold mb-6">
-                Connect at the Speed of Light
+                <!-- Connect at the Speed of Light -->
+                 Connect at the Speed of Light: <br/>Unleash the Power of Fibre Internet!
             </h1>
             <p class="text-xl md:text-2xl mb-8">
                 Unleash the Power of Fibre Internet with PluxNet
@@ -54,6 +57,10 @@
         </div>
 
         <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold mb-6">Whats my EasyPay Number?</h2>
+            <livewire:dashboard.easypay-generate-card />
+        </div>
+        <!-- <div class="text-center mb-12">
             <h2 class="text-3xl font-bold mb-6">Why Choose PluxNet?</h2>
             <ul class="text-lg space-y-4">
                 <li>✓ 24/7 Customer Support</li>
@@ -61,22 +68,17 @@
                 <li>✓ Competitive Pricing</li>
                 <li>✓ Unlimited Data Usage</li>
             </ul>
-        </div>
+        </div> -->
 
         <div class="text-center">
             <p class="text-2xl font-semibold mb-6">Ready to experience the future of internet?</p>
             <a href="/register" class="bg-white text-pluxnet-navy text-lg px-8 py-3 rounded-full inline-block hover:bg-pluxnet-coral hover:text-white transition-colors duration-200">
                 Sign Up Today
             </a>
-            <!-- <p class="bg-white text-pluxnet-navy text-lg px-8 py-3 rounded-full inline-block hover:bg-pluxnet-coral hover:text-white transition-colors duration-200">
-                <x-nav-link     class="" :href="route('register')" wire:navigate>
-                    {{ __('Sign Up Today') }}
-                </x-nav-link>
-            </p> -->
         </div>
     </main>
 
-    <footer class="bg-pluxnet-navy bg-opacity-50 mt-12 py-3">
+    <footer class="bg-pluxnet-navy bg-opacity-50 mt-12 py-6">
         <div class="flex flex-col md:flex-row gap-4 justify-center items-center px-4 text-center ">
             <p>&copy; {{ date("Y") }} PluxNet. All rights reserved.</p>
             <p class="">

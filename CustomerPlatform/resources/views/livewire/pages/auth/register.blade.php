@@ -22,10 +22,22 @@ new #[Layout('layouts.guest')] class extends Component
     public string $street = 'Shimbali';
     public string $city = 'Sands';
     public string $zip_code = '12345';
-    public string $tarrif = 'None';
+    public string $tarrif = '';
     public string $agreed_terms = 'yes';
     public string $password = 'password1234';
     public string $password_confirmation = 'password1234';
+
+    public string $selectedTariff = '';
+
+    public array $tariffs = [
+        'Home Basic' => '399',
+        'Home Starter' => '499',
+        'Home Surfer' => '649',
+        'Home Rocket' => '799',
+        'Home Giga' => '1899',
+        'Business Package' => '1399',
+        'Enterprise Package' => '1399',
+    ];
 
     // public string $name = '';
     // public string $surname = '';
@@ -56,6 +68,9 @@ new #[Layout('layouts.guest')] class extends Component
             'agreed_terms' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        
+        dd($validated['tarrif']);
 
         // Encrypt the password for the User model
         $validated['password'] = Hash::make($validated['password']);
@@ -88,7 +103,7 @@ new #[Layout('layouts.guest')] class extends Component
             // Create the corresponding EasyPay record 
             $easyPayService = new EasyPayService();
             $easyPayService->save($customer);
-            dump($easyPayService);
+            // dump($easyPayService);
 
 
             // Fire the Registered event
@@ -179,9 +194,19 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
 
         <!-- Service/Package/Tarrif -->
-        <div>
+        <!-- <div>
             <x-input-label for="tarrif" :value="__('Tarrif')" />
             <x-text-input id="tarrif" wire:model="tarrif" class="w-full px-4 py-2 border rounded-md focus:ring-[#E0457B] focus:border-[#E0457B]" name="tarrif" :value="old('tarrif')" required autocomplete="tarrif" />
+            <x-input-error :messages="$errors->get('tarrif')" class="mt-2" />
+        </div> -->
+         <div class="">
+            <x-input-label for="tarrif" :value="__('Tarrif')" />
+            <select required wire:model="tarrif" id="tarrif" name="tarrif"  class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm  w-full ">
+                <option value="">Choose a plan...</option>
+                @foreach ($tariffs as $tariff => $price)
+                    <option value="{{ $tariff }}">{{ $tariff }} - R{{ $price }} per month</option>
+                @endforeach
+            </select>
             <x-input-error :messages="$errors->get('tarrif')" class="mt-2" />
         </div>
 
