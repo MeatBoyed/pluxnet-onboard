@@ -14,6 +14,8 @@ new class extends Component
     public string $street= '';
     public string $city= '';
     public string $zip_code = '';
+    public string $tariff = '';
+    public string $billing_type = '';
     public string $created_at = '';
 
     /**
@@ -31,6 +33,8 @@ new class extends Component
         $this->street= $customer->street;
         $this->city= $customer->city;
         $this->zip_code = $customer->zip_code;
+        $this->tariff = $customer->tarrif;
+        $this->billing_type = $customer->billing_type;
         $this->created_at= $customer->created_at;
         // dump($user->id);
     }
@@ -67,6 +71,17 @@ new class extends Component
             <div>
                 <p class="text-sm text-gray-600">Phone Number</p>
                 <p class="font-semibold text-pluxnet-navy">{{ $phone_number }}</p>
+            </div>
+
+            <div class="flex flex-col md:flex-row md:space-x-4 w-full">
+                <divc class="flex-1">
+                    <p class="text-sm text-gray-600">Tariff</p>
+                    <p class="font-semibold text-pluxnet-navy">{{ $tariff }}</p>
+                </divc>
+                <div class="flex-1">
+                    <p class="text-sm text-gray-600">Billing Plan</p>
+                    <p class="font-semibold text-pluxnet-navy">{{ $billing_type}} </p>
+                </div>
             </div>
 
             <div>

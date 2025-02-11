@@ -23,6 +23,7 @@ new #[Layout('layouts.guest')] class extends Component
     public string $city = 'Sands';
     public string $zip_code = '12345';
     public string $tarrif = '';
+    public string $billing_type = '';
     public string $agreed_terms = 'yes';
     public string $password = 'password1234';
     public string $password_confirmation = 'password1234';
@@ -38,9 +39,9 @@ new #[Layout('layouts.guest')] class extends Component
         'Business Package' => '1399',
         'Enterprise Package' => '1399',
     ];
-    public array $paymentOptions = [
-        'Pre-Paid' => 'Pre-',
-        'Debit' => 'Debit',
+    public array $billing_types = [
+        'debit' => 'Debit',
+        'prepaid' => 'Pre-paid',
     ];
 
     // public string $name = '';
@@ -69,12 +70,13 @@ new #[Layout('layouts.guest')] class extends Component
             'city' => ['required', 'string', 'max:255'],
             'zip_code' => ['required', 'string', 'max:20'],
             'tarrif' => ['required', 'string', 'max:255'],
+            'billing_type' => ['required', 'string', 'max:255'],
             'agreed_terms' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
         
-        dd($validated['tarrif']);
+        // dd($validated['tarrif']);
 
         // Encrypt the password for the User model
         $validated['password'] = Hash::make($validated['password']);
@@ -101,6 +103,7 @@ new #[Layout('layouts.guest')] class extends Component
                 'city' => $validated['city'],
                 'zip_code' => $validated['zip_code'],
                 'tarrif' => $validated['tarrif'],
+                'billing_type' => $validated['billing_type'],
                 'agreed_terms' => $validated['agreed_terms'],
             ]);
 
@@ -198,19 +201,30 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
 
         <!-- Service/Package/Tarrif -->
-        <!-- <div>
-            <x-input-label for="tarrif" :value="__('Tarrif')" />
-            <x-text-input id="tarrif" wire:model="tarrif" class="w-full px-4 py-2 border rounded-md focus:ring-[#E0457B] focus:border-[#E0457B]" name="tarrif" :value="old('tarrif')" required autocomplete="tarrif" />
-            <x-input-error :messages="$errors->get('tarrif')" class="mt-2" />
-        </div> -->
          <div class="">
             <x-input-label for="tarrif" :value="__('Tarrif')" />
+
             <select required wire:model="tarrif" id="tarrif" name="tarrif"  class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm  w-full ">
                 <option value="">Choose a plan...</option>
                 @foreach ($tariffs as $tariff => $price)
                     <option value="{{ $tariff }}">{{ $tariff }} - R{{ $price }} per month</option>
                 @endforeach
             </select>
+
+            <x-input-error :messages="$errors->get('tarrif')" class="mt-2" />
+        </div>
+        
+        <!-- Billing type -->
+         <div class="">
+            <x-input-label for="billing_type" :value="__('Billing')" />
+
+            <select required wire:model="billing_type" id="billing_type" name="billing_type"  class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm  w-full ">
+                <option value="">Choose a plan...</option>
+                @foreach ($billing_types as $billing_type => $value)
+                    <option value="{{ $billing_type }}">{{ $value }}</option>
+                @endforeach
+            </select>
+
             <x-input-error :messages="$errors->get('tarrif')" class="mt-2" />
         </div>
 

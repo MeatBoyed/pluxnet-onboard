@@ -21,7 +21,8 @@ class Customer extends Model
         'city',
         'zip_code',
         'agreed_terms', // Splynx Customer ID
-        'tarrif', // Splynx Customer ID
+        'tarrif', // Package
+        'billing_type', // Debit or Prepaid (EasyPay or not)
         'splynx_id', // Splynx Customer ID
     ];  
 

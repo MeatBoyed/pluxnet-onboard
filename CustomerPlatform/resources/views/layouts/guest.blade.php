@@ -13,6 +13,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+         
     </head>
     <!-- <body class="font-sans text-gray-900 antialiased"> -->
 <body class="bg-gradient-to-br from-pluxnet-navy to-pluxnet-pink min-h-screen  antialiased font-sans">

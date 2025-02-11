@@ -51,6 +51,9 @@ new class extends Component
                     <p id="easyPayNumber" class="font-mono text-2xl font-bold text-pluxnet-navy">
                         {{ implode(' ', str_split($easypay_number, 4)) }}
                     </p>
+                    <button onclick="copyToClipboard('EasyPay Number', '{{ $easypay_number}}')" class="bg-pluxnet-coral text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors duration-200">
+                        Copy EasyPay Number
+                    </button>
                 </div>
                 <p class="text-sm text-gray-600">Use this number to make quick and easy payments for your PluxNet services.</p>
             </div>

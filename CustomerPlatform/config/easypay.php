@@ -26,5 +26,6 @@ return [
     |
     */
 
-    'character_limit' => env('EASYPAY_CHARACTER_LIMIT', '6'),
+    // 'character_limit' => env('EASYPAY_CHARACTER_LIMIT', '6'),
+    'total_character_length' => env('EASYPAY_TOTAL_CHARACTER_LENGTH', '12'),
  ];

@@ -12,6 +12,17 @@
 
         <!-- Styles -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+         <!-- Scripts -->
+        <script>
+            function copyToClipboard(name, text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert(`${name} coppied to clipboard`);
+                }).catch(err => {
+                    alert(`Failed to copy ${name}` + err);
+                });
+            }
+        </script>
     </head>
 <body class="bg-gradient-to-br from-pluxnet-navy to-pluxnet-pink min-h-screen text-white antialiased font-sans">
     <nav class="flex w-full px-4 md:px-10 py-6 justify-center md:justify-between items-center">
