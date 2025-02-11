@@ -32,7 +32,7 @@ new class extends Component
 }; ?>
 
 
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 w-full">
+<div class={{"max-w-7xl mx-auto sm:px-6 lg:px-8 w-full" . $isDebit ? '' : 'hidden'}}>
     @if ($isDebit)
         <div class="max-w-md w-full bg-white rounded-lg shadow-lg overflow-hidden">
             <!-- Header -->

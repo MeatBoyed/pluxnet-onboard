@@ -3,7 +3,7 @@
         <livewire:dashboard.greeting-card />
 
         <!-- <div class="w-full gap-5 grid grid-cols-1 md:grid-cols-2"> -->
-        <div class=" gap-5 flex flex-wrap justify-center items-start">
+        <div class="w-full gap-5 md:flex-row flex-col flex justify-center">
             <livewire:dashboard.customer-details-card /> 
 
             <livewire:dashboard.easypay-details-card /> 
