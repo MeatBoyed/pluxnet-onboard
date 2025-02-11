@@ -38,6 +38,10 @@ new #[Layout('layouts.guest')] class extends Component
         'Business Package' => '1399',
         'Enterprise Package' => '1399',
     ];
+    public array $paymentOptions = [
+        'Pre-Paid' => 'Pre-',
+        'Debit' => 'Debit',
+    ];
 
     // public string $name = '';
     // public string $surname = '';
