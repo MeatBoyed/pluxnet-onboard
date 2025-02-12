@@ -4,6 +4,7 @@ use App\Models\User;
 use App\Models\Customer;
 use App\Models\EasyPay;
 use App\Services\EasyPayService;
+use App\Services\SplynxCustomerService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,18 +16,18 @@ use Livewire\Volt\Component;
 new #[Layout('layouts.guest')] class extends Component
 {
     // Dummy data
-    public string $name = 'john';
-    public string $surname = 'doe';
-    public string $email = '';
-    public string $phone_number = '1234556';
-    public string $street = 'Shimbali';
-    public string $city = 'Sands';
-    public string $zip_code = '12345';
-    public string $tarrif = '';
-    public string $billing_type = '';
-    public string $agreed_terms = 'yes';
-    public string $password = 'password1234';
-    public string $password_confirmation = 'password1234';
+    // public string $name = 'john';
+    // public string $surname = 'doe';
+    // public string $email = '';
+    // public string $phone_number = '1234556';
+    // public string $address = 'Shimbali';
+    // public string $city = 'Sands';
+    // public string $zip_code = '12345';
+    // public string $tarrif = '';
+    // public string $billing_type = '';
+    // public string $agreed_terms = 'yes';
+    // public string $password = 'password1234';
+    // public string $password_confirmation = 'password1234';
 
     public string $selectedTariff = '';
 
@@ -44,17 +45,18 @@ new #[Layout('layouts.guest')] class extends Component
         'prepaid' => 'Pre-paid',
     ];
 
-    // public string $name = '';
-    // public string $surname = '';
-    // public string $email = '';
-    // public string $phone_number = '';
-    // public string $street = '';
-    // public string $city = '';
-    // public string $zip_code = '';
-    // public string $tarrif = '';
-    // public string $agreed_terms = '';
-    // public string $password = '';
-    // public string $password_confirmation = '';
+    public string $name = '';
+    public string $surname = '';
+    public string $email = '';
+    public string $phone_number = '';
+    public string $address = '';
+    public string $city = '';
+    public string $zip_code = '';
+    public string $tarrif = '';
+    public string $billing_type = '';
+    public string $agreed_terms = '';
+    public string $password = '';
+    public string $password_confirmation = '';
 
     /**
      * Handle an incoming registration request.
@@ -63,64 +65,102 @@ new #[Layout('layouts.guest')] class extends Component
     {
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-            'surname' => ['required', 'string', 'max:255'],
+            // Concern of Splynx
+            // 'surname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'phone_number' => ['required', 'string', 'max:20'],
-            'street' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
             'zip_code' => ['required', 'string', 'max:20'],
-            'tarrif' => ['required', 'string', 'max:255'],
-            'billing_type' => ['required', 'string', 'max:255'],
-            'agreed_terms' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+
+            'tarrif' => ['required', 'string', 'max:255'], // Not being consumed logically
+            'billing_type' => ['required', 'string', 'max:255'], // Not being consumed logically
+
+            'agreed_terms' => ['required', 'string', 'max:255'], // Find way to transfer this or keep local
+            // Concern of Splynx
+            // 'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        
-        // dd($validated['tarrif']);
 
-        // Encrypt the password for the User model
-        $validated['password'] = Hash::make($validated['password']);
+        # LAYER 1 - Create Customer & Auth through Splynx
+        $splynxCustomers = new SplynxCustomerService(); 
+        $response = $splynxCustomers->create(
+            $validated['name'], 
+            $validated['surname'], 
+            $validated['email'], 
+            $validated['phone'], 
+            'person', # person / business
+            $validated['address'], 
+            $validated['zip_code'], 
+            $validated['city'], 
+        );
 
-        DB::transaction(function () use ($validated) {
+        // Handle error
+        if(!$response['success']) {
+            Log::info('Unable to Create & Fetch Customer from SplynxAPI', $response);
+            dd('Error: ',$response);
+            return;
+        }
+
+        $customer = $response['customer'];
+        dd('Created Customer: ', $customer);
+        return;
+
+        # LAYER 2 - Create User for Authentication
+            // Encrypt the password for the User model
+            // $password = Hash::make(response['']);
+
             // Create the user
-            $user = User::create([
-                'name' => $validated['name'],
-                'email' => $validated['email'],
-                'password' => $validated['password'],
-            ]);
-
-            // Create the corresponding customer record
-            $customer = Customer::create([
-                'id' => $user->id, // Assuming the `customers` table has a `user_id` foreign key
-                'splynx_id' => '1234', // Default value
-                'username' => $validated['email'], // Assuming username is the email
-                'password' => '', // If not needed for customers, leave blank
-                'name' => $validated['name'],
-                'surname' => $validated['surname'],
-                'email' => $validated['email'],
-                'phone_number' => $validated['phone_number'],
-                'street' => $validated['street'],
-                'city' => $validated['city'],
-                'zip_code' => $validated['zip_code'],
-                'tarrif' => $validated['tarrif'],
-                'billing_type' => $validated['billing_type'],
-                'agreed_terms' => $validated['agreed_terms'],
-            ]);
-
-            // Create the corresponding EasyPay record 
-            $easyPayService = new EasyPayService();
-            $easyPayService->save($customer);
-            // dump($easyPayService);
+            // $user = User::create([
+            //     'name' => $validated['name'],
+            //     'email' => $validated['email'],
+            //     'password' => $validated['password'],
+            // ]);
+        
+        
+        // LAYER 3 - Create Customer for fast data access globally
 
 
-            // Fire the Registered event
-            event(new Registered($user));
+        // DB::transaction(function () use ($validated) {
+        //     // Create the user
+        //     $user = User::create([
+        //         'name' => $validated['name'],
+        //         'email' => $validated['email'],
+        //         'password' => $validated['password'],
+        //     ]);
 
-            // Log in the newly created user
-            Auth::login($user);
-        });
+        //     // Create the corresponding customer record
+        //     $customer = Customer::create([
+        //         'id' => $user->id, // Assuming the `customers` table has a `user_id` foreign key
+        //         'splynx_id' => '1234', // Default value
+        //         'username' => $validated['email'], // Assuming username is the email
+        //         'password' => '', // If not needed for customers, leave blank
+        //         'name' => $validated['name'],
+        //         'surname' => $validated['surname'],
+        //         'email' => $validated['email'],
+        //         'phone_number' => $validated['phone_number'],
+        //         'address' => $validated['address'],
+        //         'city' => $validated['city'],
+        //         'zip_code' => $validated['zip_code'],
+        //         'tarrif' => $validated['tarrif'],
+        //         'billing_type' => $validated['billing_type'],
+        //         'agreed_terms' => $validated['agreed_terms'],
+        //     ]);
 
-        $this->redirect(route('dashboard', absolute: false), navigate: true);
+        //     // Create the corresponding EasyPay record 
+        //     $easyPayService = new EasyPayService();
+        //     $easyPayService->save($customer);
+        //     // dump($easyPayService);
+
+
+        //     // Fire the Registered event
+        //     event(new Registered($user));
+
+        //     // Log in the newly created user
+        //     Auth::login($user);
+        // });
+
+        // $this->redirect(route('dashboard', absolute: false), navigate: true);
     }
 };
 ?>
@@ -185,9 +225,9 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
 
         <div>
-            <x-input-label for="street" :value="__('Street')" />
-            <x-text-input id="street" wire:model="street" class="w-full px-4 py-2 border rounded-md focus:ring-[#E0457B] focus:border-[#E0457B]" name="street" :value="old('street')" required autocomplete="street" />
-            <x-input-error :messages="$errors->get('street')" class="mt-2" />
+            <x-input-label for="address" :value="__('address')" />
+            <x-text-input id="address" wire:model="address" class="w-full px-4 py-2 border rounded-md focus:ring-[#E0457B] focus:border-[#E0457B]" name="address" :value="old('address')" required autocomplete="address" />
+            <x-input-error :messages="$errors->get('address')" class="mt-2" />
         </div>
         <div>
             <x-input-label for="city" :value="__('City')" />
