@@ -4,23 +4,18 @@ namespace App\Services;
 
 use App\Models\EasyPay;
 use App\Models\Customer;
+use App\DTO;
 use Illuminate\Support\Facades\Http;
 
-class SplynxAPIService 
+class SplynxAPIService
 {
-
-
-    /**
-     * Used for General GET Requests
-     * @param string $endpoint
-     * @return array{data: mixed, success: bool|array{data: null, success: bool}}
-     */
+    //  Used for General GET Requests
     public function get(string $endpoint)
     {
-        $SplynxEndpoint = config('splynx.host');
+        $splynxEndpoint = config('splynx.host');
         $response = Http::withHeaders([
             'Authorization' => $this->generateSignature(),
-        ])->get("{$SplynxEndpoint}/{$endpoint}");
+        ])->get("{$splynxEndpoint}/{$endpoint}");
 
         $responseData = $response->json();
 
@@ -33,23 +28,21 @@ class SplynxAPIService
 
         return [
             'success' => false,
-            'data'    => null,
+            'data' => $responseData,
         ];
     }
 
-    /**
-     * Used for General Post Requests
-     * @param string $endpoint
-     * @param array $payload
-     * @return array{data: mixed, success: bool|array{data: null, success: bool}}
-     */
     public function post(string $endpoint, array $payload)
     {
-        $SplynxEndpoint = config('splynx.host');
+        $splynxHost = config('splynx.host');
+        $url = $splynxHost . $endpoint;
+        echo ("Splynx host: " . $url);
+
         $response = Http::withHeaders([
             'Authorization' => $this->generateSignature(),
-        ])->post($SplynxEndpoint . '/' . $endpoint, $payload);
+        ])->post($url, $payload);
 
+        echo ("post response" . $response);
         $responseData = $response->json();
 
         if ($response->successful()) {
@@ -61,21 +54,22 @@ class SplynxAPIService
 
         return [
             'success' => false,
-            'data'    => null,
+            'data' => $response,
         ];
     }
-    
+
     // public function checkStatus() : string {
     //    $response = Http::withHeaders([
     //         'Authorization' => $this->generateSignatureHeader(),
     //     ])->check($this->SplynxPluxnetEndpoint . '/api/check');
     // }
-    
+
     /**
      * Generates Authentication Header for Requests
      * @return string
      */
-    private function generateSignature(): string {
+    private function generateSignature(): string
+    {
         $api_key = config('splynx.key');
         $api_secret = config('splynx.secret');
 
@@ -91,7 +85,7 @@ class SplynxAPIService
 
         $auth_string = http_build_query($auth_data);
 
-        $signature= 'Splynx-EA (' . $auth_string . ')';
+        $signature = 'Splynx-EA (' . $auth_string . ')';
         return $signature;
     }
 
